@@ -17,105 +17,108 @@ import medic.Prescription;
 
 public class WordCreator {
 
-	public WordCreator(){
-		super();
-	}
-	
-    public void createPrescriptionWord(ArrayList<Prescription> prescriptionList, String departeDate){
-        try (XWPFDocument doc = new XWPFDocument()) {
-        	
-            XWPFParagraph p1 = doc.createParagraph();
-            p1.setAlignment(ParagraphAlignment.LEFT);
-            
-            //¦Û©w¸qÃä¬É
-            CTSectPr sectPr = doc.getDocument().getBody().getSectPr();
-            if (sectPr == null) sectPr = doc.getDocument().getBody().addNewSectPr();
-            CTPageMar pageMar = sectPr.getPgMar();
-            if (pageMar == null) pageMar = sectPr.addNewPgMar();
-            
-            int margin=567; // ~1cm
-            //e.g., 720 TWentieths of an Inch Point (Twips) = 720/20 = 36 pt = 36/72 = 0.5"            
-            pageMar.setLeft(BigInteger.valueOf(margin));
-            pageMar.setRight(BigInteger.valueOf(margin));
-            pageMar.setTop(BigInteger.valueOf(2*margin));
-            pageMar.setBottom(BigInteger.valueOf(2*margin));
-            //pageMar.setFooter(BigInteger.valueOf(720));
-            //pageMar.setHeader(BigInteger.valueOf(720));
-            //pageMar.setGutter(BigInteger.valueOf(0));
-            
-            int p_count = 0;
+  public WordCreator() {
+    super();
+  }
 
-            for(Prescription p : prescriptionList){
-            	p_count++;// the number of prescription
-            	/*
-            	XWPFRun head_space = p1.createRun();
-            	head_space.setFontSize(28);
-            	head_space.addBreak();
-            	*/
-	            XWPFRun r1 = p1.createRun();
-	            r1.setText("¥x¤¤ºa¥ÁÁ`Âå°| ºC©Ê¯f³sÄò³B¤èÅÒ ¨úÃÄ³qª¾³æ");
-	            r1.setFontSize(26);
-	            r1.setBold(true);
-	            r1.setFontFamily("¼Ð·¢Åé");
-	            r1.addBreak();
-	            
-	            XWPFRun r2 = p1.createRun();
-	            r2.setText(departeDate);
-	            r2.setFontSize(26);
-	            r2.setBold(true);
-	            r2.setFontFamily("¼Ð·¢Åé");
-	            r2.addBreak();
+  public void createPrescriptionWord(ArrayList < Prescription > prescriptionList, String departeDate) {
+    try (XWPFDocument doc = new XWPFDocument()) {
 
-	            XWPFRun r3 = p1.createRun();
-	            r3.setText("¡¯½Ð«e¤@¤é¤U¤È 3 ÂI«e±N°·«O IC ¥d¥æ¦Ü«O°·²Õ¥~¬ì«Ç¡¯");
-	            r3.setFontSize(21);
-	            r3.setBold(true);
-	            r3.setFontFamily("¼Ð·¢Åé");
-	            r3.addBreak();
+      XWPFParagraph p1 = doc.createParagraph();
+      p1.setAlignment(ParagraphAlignment.LEFT);
 
-	            XWPFRun r4 = p1.createRun();
-	            r4.setFontSize(28);
-	            r4.setBold(true);
-	            r4.setFontFamily("¼Ð·¢Åé");
-	            r4.setText("¤á§O¡G\t"+p.getHouseName());
-	            r4.addBreak();
-	            r4.setText("©m¦W¡G\t"+p.getResidentName());
-	            r4.addBreak();
-	            r4.setText("¬ì§O¡G\t"+p.getDepartmentName());
-	            r4.addBreak();
-	            r4.setText("¨úÃÄ¦¸§O¡G\t²Ä "+p.getProgress()+" ¦¸");
-	            r4.addBreak();
+      //è‡ªå®šç¾©é‚Šç•Œ
+      CTSectPr sectPr = doc.getDocument().getBody().getSectPr();
+      if (sectPr == null) sectPr = doc.getDocument().getBody().addNewSectPr();
+      CTPageMar pageMar = sectPr.getPgMar();
+      if (pageMar == null) pageMar = sectPr.addNewPgMar();
 
-	            XWPFRun r5 = p1.createRun();
-	            r5.setFontSize(24);
-	            r5.setBold(true);
-	            r5.setFontFamily("¼Ð·¢Åé");
-	            r5.setText("¡¯½Ð©ó·í¤Ñ¤U¤È 1 ÂI«á¦Ü«O°·²Õ¨úÃÄ  ÁÂÁÂ!");
-	            
-	            //¤@­¶¤À¤W¤U¨â³¡¤À
-	            if(p_count%2!=0){
-	            	XWPFRun a_little_break = p1.createRun();
-	            	a_little_break.setFontSize(32);
-	            	a_little_break.addBreak();
-	            	a_little_break.addBreak();
-	            	a_little_break.addBreak();
-	            	a_little_break.addBreak();
-	            }
-	            
-	            // ¨C¨â­ÓºCÅÒ³qª¾³æ´N´«­¶
-	            if(p_count%2==0 && p_count<prescriptionList.size())
-	            	r5.addBreak(BreakType.PAGE);
-            }
-            
-	        //create word file
-	        try (FileOutputStream out = new FileOutputStream("ºCÅÒ³qª¾³æ.docx")) {
-	            doc.write(out);
-	            out.close();
-	            doc.close();
-	        }//End of XWPFDocument doc
-        } catch (IOException e) {
-			e.printStackTrace();
-		}
-        //System.out.println("Prescription Word file is created");
+      int margin = 567; // ~1cm
+      //e.g., 720 TWentieths of an Inch Point (Twips) = 720/20 = 36 pt = 36/72 = 0.5"            
+      pageMar.setLeft(BigInteger.valueOf(margin));
+      pageMar.setRight(BigInteger.valueOf(margin));
+      pageMar.setTop(BigInteger.valueOf(2 * margin));
+      pageMar.setBottom(BigInteger.valueOf(2 * margin));
+      //pageMar.setFooter(BigInteger.valueOf(720));
+      //pageMar.setHeader(BigInteger.valueOf(720));
+      //pageMar.setGutter(BigInteger.valueOf(0));
+
+      int p_count = 0;
+
+      for (Prescription p: prescriptionList) {
+        p_count++; // the number of prescription
+        /*
+        XWPFRun head_space = p1.createRun();
+        head_space.setFontSize(28);
+        head_space.addBreak();
+        */
+        XWPFRun r1 = p1.createRun();
+        r1.setText("å°ä¸­æ¦®æ°‘ç¸½é†«é™¢ æ…¢æ€§ç—…é€£çºŒè™•æ–¹ç±¤ å–è—¥é€šçŸ¥å–®");
+        r1.setFontSize(26);
+        r1.setBold(true);
+        r1.setFontFamily("æ¨™æ¥·é«”");
+        r1.addBreak();
+
+        XWPFRun r2 = p1.createRun();
+        r2.setText(departeDate);
+        r2.setFontSize(26);
+        r2.setBold(true);
+        r2.setFontFamily("æ¨™æ¥·é«”");
+        r2.addBreak();
+
+        XWPFRun r3 = p1.createRun();
+        r3.setText("ï¼Šè«‹å‰ä¸€æ—¥ä¸‹åˆ 3 é»žå‰å°‡å¥ä¿ IC å¡äº¤è‡³ä¿å¥çµ„å¤–ç§‘å®¤ï¼Š");
+        r3.setFontSize(21);
+        r3.setBold(true);
+        r3.setFontFamily("æ¨™æ¥·é«”");
+        r3.addBreak();
+
+        XWPFRun r4 = p1.createRun();
+        r4.setFontSize(28);
+        r4.setBold(true);
+        r4.setFontFamily("æ¨™æ¥·é«”");
+        r4.setText("æˆ¶åˆ¥ï¼š\t" + p.getHouseName());
+        r4.addBreak();
+        r4.setText("å§“åï¼š\t" + p.getResidentName());
+        r4.addBreak();
+        r4.setText("ç§‘åˆ¥ï¼š\t" + p.getDepartmentName());
+        r4.addBreak();
+        r4.setText("å–è—¥æ¬¡åˆ¥ï¼š\tç¬¬ " + p.getProgress() + " æ¬¡");
+        r4.addBreak();
+
+        XWPFRun r5 = p1.createRun();
+        r5.setFontSize(24);
+        r5.setBold(true);
+        r5.setFontFamily("æ¨™æ¥·é«”");
+        r5.setText("ï¼Šè«‹æ–¼ç•¶å¤©ä¸‹åˆ 1 é»žå¾Œè‡³ä¿å¥çµ„å–è—¥  è¬è¬!");
+
+        //ä¸€é åˆ†ä¸Šä¸‹å…©éƒ¨åˆ†
+        if (p_count % 2 != 0) {
+          XWPFRun a_little_break = p1.createRun();
+          a_little_break.setFontSize(32);
+          a_little_break.addBreak();
+          a_little_break.addBreak();
+          a_little_break.addBreak();
+          a_little_break.addBreak();
+        }
+
+        // æ¯å…©å€‹æ…¢ç±¤é€šçŸ¥å–®å°±æ›é 
+        if (p_count % 2 == 0 && p_count < prescriptionList.size())
+          r5.addBreak(BreakType.PAGE);
+      }
+
+      //create word file
+      try (FileOutputStream out = new FileOutputStream("æ…¢ç±¤é€šçŸ¥å–®.docx")) {
+        doc.write(out);
+        out.close();
+        doc.close();
+      } //End of XWPFDocument doc
+      catch (Exception e) {
+        e.printStackTrace();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    //System.out.println("Prescription Word file is created");
+  }
 }
