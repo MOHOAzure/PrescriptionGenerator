@@ -13,120 +13,120 @@ import org.apache.poi.ss.usermodel.Row;
 
 import medic.Prescription;
 
-public class ExcelReader {    
-    private ArrayList<Prescription> prescriptionList;
-	private String departDate;
-    
-    public ExcelReader(){
-    	this.prescriptionList = new ArrayList<>();
-    	this.departDate="";
-    }
+public class ExcelReader {
+  private ArrayList < Prescription > prescriptionList;
+  private String departDate;
 
-	public ArrayList<Prescription> readPrescriptionExcel(String file, String date){
-		HSSFWorkbook workbook = null;
-        FileInputStream excelFile = null;
-        HSSFSheet sheet = null;
-	    int rowNum=0, progress=0;
-	    String houseName, residentName, departmentName;
+  public ExcelReader() {
+    this.prescriptionList = new ArrayList < > ();
+    this.departDate = "";
+  }
 
-        try {
-        	excelFile = new FileInputStream(new File(file).getCanonicalPath());
-        	workbook = new HSSFWorkbook(excelFile);
-    	    sheet = workbook.getSheet(date);    	    
-		    Iterator<Row> rowIterator = sheet.iterator();
-		    
-		    while (rowIterator.hasNext()) {
-		    	Row row = rowIterator.next();
-		    	
-		    	//get departDate
-		    	if(rowNum==1){
-		    		setDepartDate(row.getCell(0).getStringCellValue().trim());
-		    	}
-		    	
-		    	//get prescriptions
-		    	if(rowNum>=3){
-		    		houseName = row.getCell(1).getStringCellValue().trim();
+  public ArrayList < Prescription > readPrescriptionExcel(String file, String date) {
+    HSSFWorkbook workbook = null;
+    FileInputStream excelFile = null;
+    HSSFSheet sheet = null;
+    int rowNum = 0, progress = 0;
+    String houseName, residentName, departmentName;
 
-		    		if(houseName.isEmpty())
-		    			continue;
-		    		
-		    		residentName = row.getCell(2).getStringCellValue().trim();
-		    		departmentName = row.getCell(3).getStringCellValue().trim();
-		    		progress = (int)row.getCell(5).getNumericCellValue();
-		    		/**/
-			        System.out.println("¤á§O : "+row.getCell(1).getStringCellValue().trim());
-			        System.out.println("¦í¥Á : "+row.getCell(2).getStringCellValue().trim());
-			        System.out.println("¬ì§O : "+row.getCell(3).getStringCellValue().trim());
-			        //System.out.println("¶E¸¹ : "+row.getCell(4).getStringCellValue().trim());
-			        System.out.println("¶i«× : "+(int)row.getCell(5).getNumericCellValue());
-			        //System.out.println("Âå¥Í : "+row.getCell(6).getStringCellValue().trim());
-			        System.out.println("");
+    try {
+      excelFile = new FileInputStream(new File(file).getCanonicalPath());
+      workbook = new HSSFWorkbook(excelFile);
+      sheet = workbook.getSheet(date);
+      Iterator < Row > rowIterator = sheet.iterator();
 
-			        Prescription prescrip = new Prescription(
-									        		houseName,
-									        		residentName,
-									        		departmentName,
-									        		progress);			        
-			        this.prescriptionList.add(prescrip);
-		    	}
-		    	rowNum++;
-		    }
-		    //this.prescriptionList.forEach(prescrip -> System.out.println(prescrip));
-		    //System.out.println("Prescription Excel file is loaded");
-	    } catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-	        if (null != workbook) {
-	            try {
-					workbook.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-	        if (null != excelFile) {
-	            try {
-					excelFile.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-	    }
-		return this.prescriptionList;
-    }
+      while (rowIterator.hasNext()) {
+        Row row = rowIterator.next();
 
-	public String getDepartDate() {
-		return departDate;
-	}
-
-	public void setDepartDate(String departDate) {
-		this.departDate = departDate;
-	}
-
-	public void getSheetNames(String file) {
-		HSSFWorkbook workbook = null;
-        FileInputStream excelFile = null;
-
-    	try {
-			excelFile = new FileInputStream(new File(file).getCanonicalPath());
-			workbook = new HSSFWorkbook(excelFile);
-			
-			// for each sheet in the workbook
-            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-                System.out.println("Sheet name: " + workbook.getSheetName(i));
-            }
-            
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-            if (excelFile != null) {
-                try {
-                	excelFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        //get departDate
+        if (rowNum == 1) {
+          setDepartDate(row.getCell(0).getStringCellValue().trim());
         }
-	}
+
+        //get prescriptions
+        if (rowNum >= 3) {
+          houseName = row.getCell(1).getStringCellValue().trim();
+
+          if (houseName.isEmpty())
+            continue;
+
+          residentName = row.getCell(2).getStringCellValue().trim();
+          departmentName = row.getCell(3).getStringCellValue().trim();
+          progress = (int) row.getCell(5).getNumericCellValue();
+          /**/
+          System.out.println("æˆ¶åˆ¥ : " + row.getCell(1).getStringCellValue().trim());
+          System.out.println("ä½æ°‘ : " + row.getCell(2).getStringCellValue().trim());
+          System.out.println("ç§‘åˆ¥ : " + row.getCell(3).getStringCellValue().trim());
+          //System.out.println("è¨ºè™Ÿ : "+row.getCell(4).getStringCellValue().trim());
+          System.out.println("é€²åº¦ : " + (int) row.getCell(5).getNumericCellValue());
+          //System.out.println("é†«ç”Ÿ : "+row.getCell(6).getStringCellValue().trim());
+          System.out.println("");
+
+          Prescription prescrip = new Prescription(
+            houseName,
+            residentName,
+            departmentName,
+            progress);
+          this.prescriptionList.add(prescrip);
+        }
+        rowNum++;
+      }
+      //this.prescriptionList.forEach(prescrip -> System.out.println(prescrip));
+      //System.out.println("Prescription Excel file is loaded");
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      if (null != workbook) {
+        try {
+          workbook.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      if (null != excelFile) {
+        try {
+          excelFile.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return this.prescriptionList;
+  }
+
+  public String getDepartDate() {
+    return departDate;
+  }
+
+  public void setDepartDate(String departDate) {
+    this.departDate = departDate;
+  }
+
+  public void getSheetNames(String file) {
+    HSSFWorkbook workbook = null;
+    FileInputStream excelFile = null;
+
+    try {
+      excelFile = new FileInputStream(new File(file).getCanonicalPath());
+      workbook = new HSSFWorkbook(excelFile);
+
+      // for each sheet in the workbook
+      for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+        System.out.println("Sheet name: " + workbook.getSheetName(i));
+      }
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      if (excelFile != null) {
+        try {
+          excelFile.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 }
