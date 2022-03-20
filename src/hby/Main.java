@@ -18,26 +18,26 @@ package hby;
 
 public class Main {
 
-    public static void main(String[] args){
-    	String excelFileName = args[0];
-    	String date = args[1];
-    	
-    	createPrescriptionWord(excelFileName, date);
-    	
-    	//getSheetNames(excelFileName);
-    }
-    
-    private static void getSheetNames(String excelFileName) {
-		ExcelReader er = new ExcelReader();
-		er.getSheetNames(excelFileName);		
-	}
+  public static void main(String[] args) {
+    String excelFileName = args[0];
+    String date = args[1];
 
-	public static void createPrescriptionWord(String excelFileName, String date){
-		ExcelReader er = new ExcelReader();
-		WordCreator wc = new WordCreator();
-		
-		wc.createPrescriptionWord(
-							er.readPrescriptionExcel(excelFileName, date), 
-							er.getDepartDate());		
-    }
+    createPrescriptionWord(excelFileName, date);
+
+    //getSheetNames(excelFileName);
+  }
+
+  private static void getSheetNames(String excelFileName) {
+    ExcelReader er = new ExcelReader();
+    er.getSheetNames(excelFileName);
+  }
+
+  public static void createPrescriptionWord(String excelFileName, String date) {
+    ExcelReader er = new ExcelReader();
+    WordCreator wc = new WordCreator();
+
+    wc.createPrescriptionWord(
+      er.readPrescriptionExcel(excelFileName, date),
+      er.getDepartDate());
+  }
 }
